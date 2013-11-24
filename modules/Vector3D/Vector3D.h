@@ -1,8 +1,6 @@
 #ifndef _INCLUDE_VECTOR3D_H_
 #define _INCLUDE_VECTOR3D_H_
 
-#include <iostream>
-
 class Vector3D
 {
 	public:
@@ -14,6 +12,8 @@ class Vector3D
 		double z;
 
 		double getDistance(const Vector3D &other);
+		Vector3D crossProduct(const Vector3D &other);
+		double dotProduct(const Vector3D &other);
 		bool operator==(const Vector3D &rhs);
 		Vector3D &operator+=(const Vector3D &rhs);
 		Vector3D &operator-=(const Vector3D &rhs);

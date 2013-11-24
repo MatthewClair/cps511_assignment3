@@ -19,6 +19,21 @@ double Vector3D::getDistance(const Vector3D &other)
 	return std::sqrt(a + b + c);
 }
 
+Vector3D Vector3D::crossProduct(const Vector3D &other)
+{
+	Vector3D a(
+			(y*other.z - z*other.y),
+			(z*other.x - x*other.z),
+			(x*other.y - y*other.x)
+			);
+	return a;
+}
+
+double Vector3D::dotProduct(const Vector3D &other)
+{
+	return x*other.x + y*other.y + z*other.z;
+}
+
 bool Vector3D::operator==(const Vector3D &rhs)
 {
 	return (x == rhs.x) &&
