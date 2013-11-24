@@ -1,5 +1,5 @@
 CC = g++
-OBJ = build/main.o build/global.o build/Point3D.o
+OBJ = build/main.o build/global.o build/Vector3D.o
 BIN = main
 FLAGS = -lGL -lGLU -lglut -Wall -Werror -std=c++11 -Wdouble-promotion
 
@@ -9,10 +9,10 @@ $(BIN): $(OBJ) Makefile
 build/global.o: global.cpp Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
-build/main.o: main.cpp modules/Point3D/Point3D.cpp Makefile
+build/main.o: main.cpp modules/Vector3D/Vector3D.cpp Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
-build/Point3D.o: modules/Point3D/Point3D.cpp Makefile
+build/Vector3D.o: modules/Vector3D/Vector3D.cpp Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
 .PHONY: clean
