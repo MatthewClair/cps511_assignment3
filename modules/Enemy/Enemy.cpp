@@ -10,7 +10,7 @@ Enemy::Enemy(Vector3D origin, Vector3D angles) :
 Enemy::~Enemy()
 { }
 
-void Enemy::Draw()
+void Enemy::draw()
 {
 	glColor3d(0.6, 0.3, 0.6);
 

@@ -14,7 +14,7 @@ class Enemy : public DrawableEntity
 		Enemy();
 		Enemy(Vector3D origin, Vector3D angles);
 		~Enemy();
-		void Draw();
+		void draw();
 
 	private:
 };
