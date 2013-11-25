@@ -7,6 +7,8 @@
 #include "global.h"
 #include "modules/Light/Light.h"
 
+#include "modules/Enemy/Enemy.h"
+
 void initDisplay(int *argc, const char *argv[]);
 void display();
 void animationHandler(int param);
@@ -82,7 +84,7 @@ void initDisplay(int *argc, const char *argv[])
 	}
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-window_width)/2, (glutGet(GLUT_SCREEN_HEIGHT)-window_height)/2); 
+	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-window_width)/2, (glutGet(GLUT_SCREEN_HEIGHT)-window_height)/2);
 	glutInitWindowSize(window_width, window_height);
 	glutCreateWindow("CPS511 - Assignment 3 - Matthew Clair, Brandon Cardoso");
 
@@ -101,7 +103,7 @@ void initDisplay(int *argc, const char *argv[])
 	glEnable(GL_DEPTH_TEST);
 
 	glutDisplayFunc(display);
-	
+
 	animationHandler(0);
 }
 
@@ -117,7 +119,7 @@ void display()
 	glLoadIdentity();
 	
 	//temp--->
-	gluLookAt(100, 100, 100,
+	gluLookAt(100, 100, 0,
 			0, 0, 0,
 			0, 1, 0);
 
@@ -129,6 +131,17 @@ void display()
 
 	glColor3ub(109, 192, 247);
 	//<---temp
+	
+	Vector3D o(50.0, 0.0, 50.0);
+	Vector3D a(30.0, 40.0, 50.0);
+
+	Enemy enemy(o, a);
+	enemy.Draw();
+
+	o.x = 0.0; o.y = 0.0; o.z = 0.0;
+	a.x = 0.0; a.y = 0.0; a.z = 0.0;
+	Enemy enemy2(o, a);
+	enemy2.Draw();
 
 	glutSwapBuffers();
 }
