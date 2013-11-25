@@ -1,18 +1,26 @@
 #include <cstdlib>
+#include <cstring>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 
 #include "global.h"
 
 void initDisplay(int *argc, const char *argv[]);
+void display();
 
 int main(int argc, const char *argv[])
 {
 	initDisplay(&argc, argv);
-	
+
+	glutMainLoop();
 	return 0;
 }
 
 void initDisplay(int *argc, const char *argv[])
 {
+	glutInit(argc, (char **)argv);
+
 	for (int i = 0; i < *argc; i++)
 	{
 		if (argv[i][0] == '-')
@@ -70,4 +78,16 @@ void initDisplay(int *argc, const char *argv[])
 			}
 		}
 	}
+
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitWindowPosition(50, 50);
+	glutInitWindowSize(window_width, window_height);
+	glutCreateWindow("CPS511 - Assignment 3 - Matthew Clair, Brandon Cardoso");
+	glClearColor(1.0, 1.0, 1.0, 1.0);
+
+	glutDisplayFunc(display);
+}
+
+void display()
+{
 }
