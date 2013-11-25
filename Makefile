@@ -1,6 +1,6 @@
 CC = g++
 OBJ = build/main.o build/global.o build/Vector3D.o build/DrawableEntity.o \
-	  build/Player.o build/Light.o build/Enemy.o
+	  build/Player.o build/Light.o build/Enemy.o build/Projectile.o build/Colour.o
 BIN = main
 FLAGS = -lGL -lGLU -lglut -Wall -Werror -std=c++11 -Wdouble-promotion -I./
 
@@ -30,6 +30,13 @@ build/Vector3D.o: modules/Vector3D/Vector3D.cpp Makefile
 
 build/Light.o: modules/Light/Light.cpp modules/Light/Light.h \
 	modules/DrawableEntity/DrawableEntity.h Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
+build/Projectile.o: modules/Projectile/Projectile.cpp modules/Projectile/Projectile.h \
+	modules/DrawableEntity/DrawableEntity.h Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
+build/Colour.o: modules/Colour/Colour.cpp modules/Colour/Colour.h Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
 .PHONY: clean

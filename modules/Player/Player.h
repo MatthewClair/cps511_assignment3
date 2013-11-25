@@ -9,7 +9,7 @@ class Player : public DrawableEntity
 		Player();
 		Player(Vector3D origin, Vector3D angles);
 		~Player();
-		void Draw();
+		void draw();
 
 	private:
 };

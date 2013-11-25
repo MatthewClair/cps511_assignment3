@@ -9,7 +9,7 @@ class DrawableEntity
 		DrawableEntity();
 		DrawableEntity(Vector3D origin, Vector3D angles);
 		~DrawableEntity();
-		virtual void Draw() = 0;
+		virtual void draw() = 0;
 
 	protected:
 		Vector3D origin;

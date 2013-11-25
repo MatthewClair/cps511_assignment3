@@ -10,5 +10,5 @@ Player::Player(Vector3D origin, Vector3D angles) :
 Player::~Player()
 { }
 
-void Player::Draw()
+void Player::draw()
 { }
