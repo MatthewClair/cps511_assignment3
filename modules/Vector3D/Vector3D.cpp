@@ -1,6 +1,12 @@
-#include "Vector3D.h"
+#include "modules/Vector3D/Vector3D.h"
 #include <cmath>
 
+Vector3D::Vector3D()
+{
+	x = 0;
+	y = 0;
+	z = 0;
+}
 Vector3D::Vector3D(double x, double y, double z)
 {
 	this->x = x;
