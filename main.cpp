@@ -6,7 +6,8 @@
 
 #include "global.h"
 #include "modules/Light/Light.h"
-
+#include "modules/Projectile/Projectile.h"
+#include "modules/Colour/Colour.h"
 #include "modules/Enemy/Enemy.h"
 
 void initDisplay(int *argc, const char *argv[]);
@@ -127,15 +128,15 @@ void display()
 	Vector3D a(0, 0, 0);
 	float d[] = {0.5, 0.5, 0.5, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
-	light.Draw();
+	light.draw();
 
-	glColor3ub(109, 192, 247);
 
 	Vector3D o2(50.0, 0.0, 0.0);
 	Vector3D a2(0.0, 90.0, 0.0);
+	Colour c(255, 0, 255);
 
-	Enemy enemy(o2, a2);
-	enemy.Draw();
+	Projectile p(o2, a2, 100, c);
+	p.draw();
 
 	//<---temp
 

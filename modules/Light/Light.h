@@ -12,8 +12,8 @@ class Light : public DrawableEntity
 		Light(Vector3D origin, Vector3D angles,
 				GLenum light, const float *diffuse);
 		~Light();
-		void Draw();
-	
+		void draw();
+
 	private:
 		GLenum light;
 

@@ -16,7 +16,7 @@ Light::Light(Vector3D origin, Vector3D angles,
 Light::~Light()
 { }
 
-void Light::Draw()
+void Light::draw()
 {
 	glEnable(light);
 
