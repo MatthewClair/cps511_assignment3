@@ -8,6 +8,7 @@
 
 void initDisplay(int *argc, const char *argv[]);
 void display();
+void animationHandler(int param);
 
 int main(int argc, const char *argv[])
 {
@@ -80,14 +81,40 @@ void initDisplay(int *argc, const char *argv[])
 	}
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowPosition(50, 50);
+	glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH)-window_width)/2, (glutGet(GLUT_SCREEN_HEIGHT)-window_height)/2); 
 	glutInitWindowSize(window_width, window_height);
 	glutCreateWindow("CPS511 - Assignment 3 - Matthew Clair, Brandon Cardoso");
-	glClearColor(1.0, 1.0, 1.0, 1.0);
 
 	glutDisplayFunc(display);
+	
+	animationHandler(0);
 }
 
 void display()
 {
+	glViewport(0, 0, window_width, window_height);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(106, (float)window_width/(float)window_height, 1, 5000);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	
+	glClearColor(1.0,1.0,1.0,1.0);
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); 
+
+	//temp--->
+	gluLookAt(100, 100, 100,
+			0, 0, 0,
+			0, 1, 0);
+
+	glColor3ub(109, 192, 247);
+	//<---temp
+
+	glutSwapBuffers();
+}
+
+void animationHandler(int param)
+{
+	glutPostRedisplay();
+	glutTimerFunc(10, animationHandler, 0);
 }
