@@ -109,17 +109,17 @@ void initDisplay(int *argc, const char *argv[])
 
 void display()
 {
-	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); 
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 	glViewport(0, 0, window_width, window_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(106, (float)window_width/(float)window_height, 1, 5000);
+	gluPerspective(75, (float)window_width/(float)window_height, 1, 5000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	
+
 	//temp--->
-	gluLookAt(100, 100, 0,
+	gluLookAt(500, 200, 200,
 			0, 0, 0,
 			0, 1, 0);
 
@@ -130,18 +130,14 @@ void display()
 	light.Draw();
 
 	glColor3ub(109, 192, 247);
-	//<---temp
-	
-	Vector3D o(50.0, 0.0, 50.0);
-	Vector3D a(30.0, 40.0, 50.0);
 
-	Enemy enemy(o, a);
+	Vector3D o2(50.0, 0.0, 0.0);
+	Vector3D a2(0.0, 90.0, 0.0);
+
+	Enemy enemy(o2, a2);
 	enemy.Draw();
 
-	o.x = 0.0; o.y = 0.0; o.z = 0.0;
-	a.x = 0.0; a.y = 0.0; a.z = 0.0;
-	Enemy enemy2(o, a);
-	enemy2.Draw();
+	//<---temp
 
 	glutSwapBuffers();
 }
