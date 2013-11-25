@@ -15,6 +15,7 @@ class Vector3D
 		double getDistance(const Vector3D &other);
 		Vector3D crossProduct(const Vector3D &other);
 		double dotProduct(const Vector3D &other);
+		void getFloatArray(float *array);
 		bool operator==(const Vector3D &rhs);
 		Vector3D &operator+=(const Vector3D &rhs);
 		Vector3D &operator-=(const Vector3D &rhs);

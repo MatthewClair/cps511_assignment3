@@ -62,3 +62,10 @@ Vector3D &Vector3D::operator-=(const Vector3D &rhs)
 	z -= rhs.z;
 	return *this;
 }
+
+void Vector3D::getFloatArray(float *array)
+{
+	array[0] = x;
+	array[1] = y;
+	array[2] = z;
+}

@@ -1,6 +1,6 @@
 CC = g++
 OBJ = build/main.o build/global.o build/Vector3D.o build/DrawableEntity.o \
-	  build/Player.o
+	  build/Player.o build/Light.o
 BIN = main
 FLAGS = -lGL -lGLU -lglut -Wall -Werror -std=c++11 -Wdouble-promotion -I./
 
@@ -22,6 +22,10 @@ build/Player.o: modules/Player/Player.cpp modules/Player/Player.h \
 	$(CC) $(FLAGS) -o $@ -c $<
 
 build/Vector3D.o: modules/Vector3D/Vector3D.cpp Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
+build/Light.o: modules/Light/Light.cpp modules/Light/Light.h \
+	modules/DrawableEntity/DrawableEntity.h Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
 .PHONY: clean

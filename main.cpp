@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 
 #include "global.h"
+#include "modules/Light/Light.h"
 
 void initDisplay(int *argc, const char *argv[]);
 void display();
@@ -85,6 +86,20 @@ void initDisplay(int *argc, const char *argv[])
 	glutInitWindowSize(window_width, window_height);
 	glutCreateWindow("CPS511 - Assignment 3 - Matthew Clair, Brandon Cardoso");
 
+	glClearColor(1.0,1.0,1.0,1.0);
+
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+	float light_ambient[] = {.2, .2, .2, 1.0};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient);
+
+	glShadeModel(GL_SMOOTH);
+
+	glEnable(GL_TEXTURE_3D);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_DEPTH_TEST);
+
 	glutDisplayFunc(display);
 	
 	animationHandler(0);
@@ -92,6 +107,8 @@ void initDisplay(int *argc, const char *argv[])
 
 void display()
 {
+	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); 
+
 	glViewport(0, 0, window_width, window_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -99,13 +116,16 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-	glClearColor(1.0,1.0,1.0,1.0);
-	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); 
-
 	//temp--->
 	gluLookAt(100, 100, 100,
 			0, 0, 0,
 			0, 1, 0);
+
+	Vector3D o(2000, 500, 0);
+	Vector3D a(0, 0, 0);
+	float d[] = {0.5, 0.5, 0.5, 1.0};
+	Light light(o, a, GL_LIGHT0, d);
+	light.Draw();
 
 	glColor3ub(109, 192, 247);
 	//<---temp
