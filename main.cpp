@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <cstring>
+#include <math.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -14,9 +15,12 @@ void initDisplay(int *argc, const char *argv[]);
 void display();
 void animationHandler(int param);
 
+int tick;
+
 int main(int argc, const char *argv[])
 {
 	initDisplay(&argc, argv);
+	tick = 0;
 
 	glutMainLoop();
 	return 0;
@@ -120,19 +124,20 @@ void display()
 	glLoadIdentity();
 
 	//temp--->
-	gluLookAt(500, 200, 200,
+	gluLookAt(400, 200, 200,
 			0, 0, 0,
 			0, 1, 0);
 
-	Vector3D o(2000, 500, 0);
+	//Vector3D o(0, 100, -100);
+	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
 	Vector3D a(0, 0, 0);
-	float d[] = {0.5, 0.5, 0.5, 1.0};
+	float d[] = {0.8, 0.8, 0.8, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
 	light.draw();
 
 
 	Vector3D o2(50.0, 0.0, 0.0);
-	Vector3D a2(0.0, 90.0, 0.0);
+	Vector3D a2(0.0, 0.0, 0.0);
 	Colour c(255, 0, 255);
 
 	Projectile p(o2, a2, 100, c);
@@ -141,6 +146,7 @@ void display()
 	//<---temp
 
 	glutSwapBuffers();
+	tick++;
 }
 
 void animationHandler(int param)
