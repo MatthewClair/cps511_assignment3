@@ -12,7 +12,6 @@ class DrawableEntity
 		~DrawableEntity();
 	virtual void draw() = 0;
 
-		void accelerate(double velocity, Vector3D angle);
 		void updatePosition();
 
 	protected:

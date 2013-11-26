@@ -6,9 +6,9 @@
 
 Player::Player() : DrawableEntity()
 {
-	origin = {0, 0, 500};
+	origin = {0, 0, 0};
 	angles = {0, 0, 0};
-	velocity = {5, 5, 5};
+	velocity = {0, 0, 0};
 }
 
 Player::Player(Vector3D origin, Vector3D angles) :
@@ -57,10 +57,28 @@ void Player::brake()
 	if (velocity.x < .01 && velocity.x > -0.01) {
 		velocity.x = 0;
 	}
+
 	if (velocity.y < .01 && velocity.y > -0.01) {
 		velocity.y = 0;
 	}
+
 	if (velocity.z < .01 && velocity.z > -0.01) {
 		velocity.z = 0;
 	}
+}
+
+void Player::fireProjectiles(std::vector<Projectile>* projectiles)
+{
+	Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 10);
+	Colour pColour(255, 0, 0);
+	double pRadius = 3;
+
+	Vector3D o1(origin.x - 15, origin.y, origin.z);
+	Vector3D o2(origin.x + 15, origin.y, origin.z);
+
+	Projectile p1(o1, angles, pVelocity, pRadius, pColour);
+	Projectile p2(o2, angles, pVelocity, pRadius, pColour);
+
+	projectiles->push_back(p1);
+	projectiles->push_back(p2);
 }

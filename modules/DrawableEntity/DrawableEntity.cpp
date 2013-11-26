@@ -26,7 +26,5 @@ DrawableEntity::~DrawableEntity()
 
 void DrawableEntity::updatePosition()
 {
-	origin.x += velocity.x;
-	origin.y += velocity.y;
-	origin.z += velocity.z;
+	origin += velocity;
 }

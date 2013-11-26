@@ -11,10 +11,16 @@ class Projectile : public DrawableEntity
 		Projectile(Vector3D origin, Vector3D angles, Vector3D velocity, GLdouble radius, Colour c);
 		~Projectile();
 		void draw();
+		void updatePosition();
+
+		bool noLongerExists;
 
 	private:
 		GLdouble radius;
 		Colour colour;
+
+		int lifeSpan;
+		int timeExisted;
 };
 
 #endif
