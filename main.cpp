@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <math.h>
-#include <vector>
+#include <list>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -24,7 +24,7 @@ bool* keyStates = new bool[256];
 
 int tick;
 
-std::vector<Projectile> projectiles;
+std::list<Projectile> projectiles;
 
 int main(int argc, const char *argv[])
 {
@@ -148,11 +148,12 @@ void display()
 	Enemy e(o2, a);
 	e.draw();
 
-	for (unsigned int i = 0; i < projectiles.size(); i++) {
-		projectiles[i].draw();
-	}
-
 	//<---temp
+
+	std::list<Projectile>::iterator p;
+	for (p = projectiles.begin(); p != projectiles.end(); p++) {
+		p->draw();
+	}
 
 	glutSwapBuffers();
 	tick++;
@@ -163,19 +164,12 @@ void timerTick(int param)
 	keyHandler();
 	ThePlayer.updatePosition();
 
-	//std::vector<Projectile>::iterator p;
-	//for (p = projectiles.begin(); p != projectiles.end(); p++) {
-		//p->updatePosition();
+	std::list<Projectile>::iterator p;
+	for (p = projectiles.begin(); p != projectiles.end(); p++) {
+		p->updatePosition();
 
-		//if (p->noLongerExists) {
-			//projectiles.erase(p);
-		//}
-	//}
-	for (unsigned int i = 0; i < projectiles.size(); i++) {
-		projectiles[i].updatePosition();
-
-		if (projectiles[i].noLongerExists) {
-			projectiles.erase(projectiles.begin() + i);
+		if (p->noLongerExists) {
+			p = projectiles.erase(p);
 		}
 	}
 

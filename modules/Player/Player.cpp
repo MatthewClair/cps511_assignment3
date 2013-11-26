@@ -67,7 +67,7 @@ void Player::brake()
 	}
 }
 
-void Player::fireProjectiles(std::vector<Projectile>* projectiles)
+void Player::fireProjectiles(std::list<Projectile>* projectiles)
 {
 	Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 10);
 	Colour pColour(255, 0, 0);

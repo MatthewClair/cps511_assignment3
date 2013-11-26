@@ -1,7 +1,7 @@
 #ifndef _INCLUDE_PLAYER_H_
 #define _INCLUDE_PLAYER_H_
 
-#include <vector>
+#include <list>
 
 #include "modules/DrawableEntity/DrawableEntity.h"
 #include "modules/Projectile/Projectile.h"
@@ -18,7 +18,7 @@ class Player : public DrawableEntity
 		void accelerateRight();
 		void brake();
 
-		void fireProjectiles(std::vector<Projectile>* projectiles);
+		void fireProjectiles(std::list<Projectile>* projectiles);
 
 	private:
 };
