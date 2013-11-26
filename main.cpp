@@ -1,6 +1,8 @@
+#include <stdio.h>
 #include <cstdlib>
 #include <cstring>
 #include <math.h>
+#include <vector>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
@@ -17,13 +19,12 @@ void timerTick(int param);
 
 void keyDownHandler(unsigned char key, int x, int y);
 void keyUpHandler(unsigned char key, int x, int y);
-
 void keyHandler();
-
 bool* keyStates = new bool[256];
 
-
 int tick;
+
+std::vector<Projectile> projectiles;
 
 int main(int argc, const char *argv[])
 {
@@ -31,6 +32,7 @@ int main(int argc, const char *argv[])
 	glutKeyboardFunc(keyDownHandler);
 	glutKeyboardUpFunc(keyUpHandler);
 	tick = 0;
+
 
 	glutMainLoop();
 	return 0;
@@ -136,20 +138,19 @@ void display()
 	//temp--->
 	ThePlayer.draw();
 
-	//Vector3D o(0, 100, -100);
 	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
 	Vector3D a(0, 0, 0);
 	float d[] = {0.8, 0.8, 0.8, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
 	light.draw();
 
+	Vector3D o2(0, 0, 0);
+	Enemy e(o2, a);
+	e.draw();
 
-	Vector3D o2(0.0, 0.0, 0.0);
-	Vector3D a2(0.0, 0.0, 0.0);
-	Colour c(255, 0, 255);
-
-	Projectile p(o2, a2, a2, 50, c);
-	p.draw();
+	for (unsigned int i = 0; i < projectiles.size(); i++) {
+		projectiles[i].draw();
+	}
 
 	//<---temp
 
@@ -161,6 +162,22 @@ void timerTick(int param)
 {
 	keyHandler();
 	ThePlayer.updatePosition();
+
+	//std::vector<Projectile>::iterator p;
+	//for (p = projectiles.begin(); p != projectiles.end(); p++) {
+		//p->updatePosition();
+
+		//if (p->noLongerExists) {
+			//projectiles.erase(p);
+		//}
+	//}
+	for (unsigned int i = 0; i < projectiles.size(); i++) {
+		projectiles[i].updatePosition();
+
+		if (projectiles[i].noLongerExists) {
+			projectiles.erase(projectiles.begin() + i);
+		}
+	}
 
 	glutPostRedisplay();
 	glutTimerFunc(10, timerTick, 0);
@@ -178,15 +195,26 @@ void keyUpHandler(unsigned char key, int x, int y)
 
 void keyHandler()
 {
-	if (keyStates['a']) {
+	//player movement
+	if (keyStates['a'])
+	{
 		ThePlayer.accelerateLeft();
 	}
-	if (keyStates['d']) {
+	if (keyStates['d'])
+	{
 		ThePlayer.accelerateRight();
 	}
 
+	//breaking if no movement keys are being pressed
 	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'])
 	{
 		ThePlayer.brake();
 	}
+
+	//firing a projectile
+	if (keyStates[' '])
+	{
+		ThePlayer.fireProjectiles(&projectiles);
+	}
+
 }

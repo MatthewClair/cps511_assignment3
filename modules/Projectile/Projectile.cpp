@@ -10,13 +10,16 @@ Projectile::Projectile(Vector3D origin, Vector3D angles, Vector3D velocity,
 {
 	this->radius = radius;
 	this->colour = c;
+
+	this->timeExisted = 0;
+	this->lifeSpan = 100;
+	this->noLongerExists = false;
 }
 
 Projectile::~Projectile()
 { }
 
 void Projectile::draw()
-
 {
 	glColor3ub(colour.red, colour.green, colour.blue);
 
@@ -25,4 +28,14 @@ void Projectile::draw()
 
 		glutSolidSphere(radius, 16, 16);
 	glPopMatrix();
+}
+
+void Projectile::updatePosition()
+{
+	DrawableEntity::updatePosition();
+
+	timeExisted++;
+	if (timeExisted >= lifeSpan) {
+		noLongerExists = true;
+	}
 }
