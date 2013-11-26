@@ -11,6 +11,10 @@ class Player : public DrawableEntity
 		~Player();
 		void draw();
 
+		void accelerateLeft();
+		void accelerateRight();
+		void brake();
+
 	private:
 };
 

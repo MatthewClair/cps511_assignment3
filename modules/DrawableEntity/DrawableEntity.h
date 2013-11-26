@@ -8,12 +8,17 @@ class DrawableEntity
 	public:
 		DrawableEntity();
 		DrawableEntity(Vector3D origin, Vector3D angles);
+		DrawableEntity(Vector3D origin, Vector3D angles, Vector3D velocity);
 		~DrawableEntity();
-		virtual void draw() = 0;
+	virtual void draw() = 0;
+
+		void accelerate(double velocity, Vector3D angle);
+		void updatePosition();
 
 	protected:
 		Vector3D origin;
 		Vector3D angles;
+		Vector3D velocity;
 };
 
 #endif

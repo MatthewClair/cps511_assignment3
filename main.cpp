@@ -13,13 +13,23 @@
 
 void initDisplay(int *argc, const char *argv[]);
 void display();
-void animationHandler(int param);
+void timerTick(int param);
+
+void keyDownHandler(unsigned char key, int x, int y);
+void keyUpHandler(unsigned char key, int x, int y);
+
+void keyHandler();
+
+bool* keyStates = new bool[256];
+
 
 int tick;
 
 int main(int argc, const char *argv[])
 {
 	initDisplay(&argc, argv);
+	glutKeyboardFunc(keyDownHandler);
+	glutKeyboardUpFunc(keyUpHandler);
 	tick = 0;
 
 	glutMainLoop();
@@ -109,7 +119,7 @@ void initDisplay(int *argc, const char *argv[])
 
 	glutDisplayFunc(display);
 
-	animationHandler(0);
+	timerTick(0);
 }
 
 void display()
@@ -138,7 +148,7 @@ void display()
 	Vector3D a2(0.0, 0.0, 0.0);
 	Colour c(255, 0, 255);
 
-	Projectile p(o2, a2, 50, c);
+	Projectile p(o2, a2, a2, 50, c);
 	p.draw();
 
 	//<---temp
@@ -147,8 +157,36 @@ void display()
 	tick++;
 }
 
-void animationHandler(int param)
+void timerTick(int param)
 {
+	keyHandler();
+	ThePlayer.updatePosition();
+
 	glutPostRedisplay();
-	glutTimerFunc(10, animationHandler, 0);
+	glutTimerFunc(10, timerTick, 0);
+}
+
+void keyDownHandler(unsigned char key, int x, int y)
+{
+	keyStates[key]= true;
+}
+
+void keyUpHandler(unsigned char key, int x, int y)
+{
+	keyStates[key] = false;
+}
+
+void keyHandler()
+{
+	if (keyStates['a']) {
+		ThePlayer.accelerateLeft();
+	}
+	if (keyStates['d']) {
+		ThePlayer.accelerateRight();
+	}
+
+	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'])
+	{
+		ThePlayer.brake();
+	}
 }

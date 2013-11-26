@@ -5,8 +5,8 @@
 Projectile::Projectile() : DrawableEntity()
 { }
 
-Projectile::Projectile(Vector3D origin, Vector3D angles, GLdouble radius, Colour c) :
-	DrawableEntity(origin, angles)
+Projectile::Projectile(Vector3D origin, Vector3D angles, Vector3D velocity,
+		GLdouble radius, Colour c) : DrawableEntity(origin, angles, velocity)
 {
 	this->radius = radius;
 	this->colour = c;
