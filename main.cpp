@@ -162,11 +162,11 @@ void display()
 void timerTick(int param)
 {
 	keyHandler();
-	ThePlayer.updatePosition();
+	ThePlayer.update();
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
-		p->updatePosition();
+		p->update ();
 
 		if (p->noLongerExists) {
 			p = projectiles.erase(p);

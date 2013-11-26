@@ -24,7 +24,7 @@ DrawableEntity::DrawableEntity(Vector3D origin, Vector3D angles, Vector3D veloci
 DrawableEntity::~DrawableEntity()
 { }
 
-void DrawableEntity::updatePosition()
+void DrawableEntity::update()
 {
 	origin += velocity;
 }

@@ -12,7 +12,7 @@ class DrawableEntity
 		~DrawableEntity();
 	virtual void draw() = 0;
 
-		void updatePosition();
+		void update();
 
 	protected:
 		Vector3D origin;

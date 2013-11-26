@@ -13,7 +13,12 @@ Player::Player() : DrawableEntity()
 
 Player::Player(Vector3D origin, Vector3D angles) :
 	DrawableEntity(origin, angles)
-{ }
+{
+	velocity = {0, 0, 0};
+
+	fireDelay = 50;
+	timeSinceLastFired = fireDelay;
+}
 
 Player::~Player()
 { }
@@ -50,9 +55,9 @@ void Player::accelerateRight()
 
 void Player::brake()
 {
-	velocity.x *= .98;
-	velocity.y *= .98;
-	velocity.z *= .98;
+	velocity.x *= .92;
+	velocity.y *= .92;
+	velocity.z *= .92;
 
 	if (velocity.x < .01 && velocity.x > -0.01) {
 		velocity.x = 0;
@@ -69,16 +74,27 @@ void Player::brake()
 
 void Player::fireProjectiles(std::list<Projectile>* projectiles)
 {
-	Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 10);
-	Colour pColour(255, 0, 0);
-	double pRadius = 3;
+	if (timeSinceLastFired >= fireDelay) {
+		Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 5);
+		Colour pColour(255, 0, 0);
+		double pRadius = 3;
 
-	Vector3D o1(origin.x - 15, origin.y, origin.z);
-	Vector3D o2(origin.x + 15, origin.y, origin.z);
+		Vector3D o1(origin.x - 15, origin.y, origin.z);
+		Vector3D o2(origin.x + 15, origin.y, origin.z);
 
-	Projectile p1(o1, angles, pVelocity, pRadius, pColour);
-	Projectile p2(o2, angles, pVelocity, pRadius, pColour);
+		Projectile p1(o1, angles, pVelocity, pRadius, pColour);
+		Projectile p2(o2, angles, pVelocity, pRadius, pColour);
 
-	projectiles->push_back(p1);
-	projectiles->push_back(p2);
+		projectiles->push_back(p1);
+		projectiles->push_back(p2);
+
+		timeSinceLastFired = 0;
+	}
+}
+
+void Player::update()
+{
+	timeSinceLastFired++;
+
+	DrawableEntity::update();
 }

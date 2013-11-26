@@ -13,6 +13,7 @@ class Player : public DrawableEntity
 		Player(Vector3D origin, Vector3D angles);
 		~Player();
 		void draw();
+		void update();
 
 		void accelerateLeft();
 		void accelerateRight();
@@ -21,6 +22,8 @@ class Player : public DrawableEntity
 		void fireProjectiles(std::list<Projectile>* projectiles);
 
 	private:
+		int fireDelay;
+		int timeSinceLastFired;
 };
 
 #endif

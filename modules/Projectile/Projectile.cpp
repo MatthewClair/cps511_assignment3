@@ -30,9 +30,9 @@ void Projectile::draw()
 	glPopMatrix();
 }
 
-void Projectile::updatePosition()
+void Projectile::update()
 {
-	DrawableEntity::updatePosition();
+	DrawableEntity::update();
 
 	timeExisted++;
 	if (timeExisted >= lifeSpan) {
