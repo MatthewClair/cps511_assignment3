@@ -124,9 +124,7 @@ void display()
 	glLoadIdentity();
 
 	//temp--->
-	gluLookAt(400, 200, 200,
-			0, 0, 0,
-			0, 1, 0);
+	ThePlayer.draw();
 
 	//Vector3D o(0, 100, -100);
 	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
@@ -136,11 +134,11 @@ void display()
 	light.draw();
 
 
-	Vector3D o2(50.0, 0.0, 0.0);
+	Vector3D o2(0.0, 0.0, 0.0);
 	Vector3D a2(0.0, 0.0, 0.0);
 	Colour c(255, 0, 255);
 
-	Projectile p(o2, a2, 100, c);
+	Projectile p(o2, a2, 50, c);
 	p.draw();
 
 	//<---temp
