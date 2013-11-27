@@ -134,6 +134,10 @@ void initDisplay(int *argc, const char *argv[])
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1);
+	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.001f);
+    //glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, .0001f);
+
 	glutDisplayFunc(display);
 
 	timerTick(0);
