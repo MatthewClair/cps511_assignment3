@@ -205,17 +205,32 @@ void keyUpHandler(unsigned char key, int x, int y)
 void keyHandler()
 {
 	//player movement
-	if (keyStates['a'])
+	if (keyStates['a'] || keyStates['A'])
 	{
-		ThePlayer.accelerateLeft();
+		if (ThePlayer.getOrigin().x > -TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerateLeft();
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
 	}
-	if (keyStates['d'])
+	if (keyStates['d'] || keyStates['D'])
 	{
-		ThePlayer.accelerateRight();
+		if (ThePlayer.getOrigin().x < TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerateRight();
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
 	}
 
 	//breaking if no movement keys are being pressed
-	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'])
+	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'] &&
+		!keyStates['A'] && !keyStates['D'] && !keyStates['W'] && !keyStates['S'])
 	{
 		ThePlayer.brake();
 	}

@@ -10,6 +10,7 @@ World::World() : DrawableEntity()
 	quadric = gluNewQuadric();
 	gluQuadricOrientation(quadric, GLU_INSIDE);
 	gluQuadricNormals(quadric, GLU_SMOOTH);
+	this->radius = 2000;
 }
 
 World::~World()
@@ -21,5 +22,10 @@ void World::draw()
 {
 	glColor3ub(0, 0, 64);
 
-	gluSphere(quadric, 2000, 32, 16);
+	gluSphere(quadric, radius, 32, 16);
+}
+
+double World::getRadius()
+{
+	return this->radius;
 }

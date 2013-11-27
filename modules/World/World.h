@@ -12,8 +12,11 @@ class World : public DrawableEntity
 		~World();
 		void draw();
 
+		double getRadius();
+
 	private:
 		GLUquadric *quadric;
+		double radius;
 };
 
 #endif
