@@ -139,13 +139,14 @@ void display()
 	ThePlayer.draw();
 
 	//temp--->
+	TheWorld.draw();
+
 	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
 	Vector3D a(0, 0, 0);
 	float d[] = {0.8, 0.8, 0.8, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
 	light.draw();
 
-	TheWorld.draw();
 
 	//<---temp
 

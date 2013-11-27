@@ -4,6 +4,7 @@
 //#include <GL/glut.h>
 
 #include "World.h"
+#include "global.h"
 
 World::World() : DrawableEntity()
 {
@@ -21,5 +22,8 @@ void World::draw()
 {
 	glColor3ub(0, 0, 64);
 
-	gluSphere(quadric, 2000, 32, 16);
+	glPushMatrix();
+		glTranslated(ThePlayer.origin.x, ThePlayer.origin.y, ThePlayer.origin.z);
+		gluSphere(quadric, 4000, 32, 16);
+	glPopMatrix();
 }
