@@ -22,7 +22,6 @@ void keyUpHandler(unsigned char key, int x, int y);
 void keyHandler();
 bool* keyStates = new bool[256];
 
-int tick;
 
 std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
@@ -37,7 +36,6 @@ int main(int argc, const char *argv[])
 	initDisplay(&argc, argv);
 	glutKeyboardFunc(keyDownHandler);
 	glutKeyboardUpFunc(keyUpHandler);
-	tick = 0;
 
 	numEnemies = 10;
 	for (int i = 0; i < numEnemies; i++) {
@@ -165,7 +163,6 @@ void display()
 	}
 
 	glutSwapBuffers();
-	tick++;
 }
 
 void timerTick(int param)
