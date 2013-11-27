@@ -57,8 +57,6 @@ void Enemy::draw()
 			Quad q4(v4[0], v4[1], v4[2]);
 			q4.draw();
 		glPopMatrix();
-
-		glutSolidTeapot(50.0);
 	glPopMatrix();
 }
 

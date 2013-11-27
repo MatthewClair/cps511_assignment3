@@ -11,6 +11,7 @@ World::World() : DrawableEntity()
 	quadric = gluNewQuadric();
 	gluQuadricOrientation(quadric, GLU_INSIDE);
 	gluQuadricNormals(quadric, GLU_SMOOTH);
+	this->radius = 4000;
 }
 
 World::~World()
@@ -26,4 +27,9 @@ void World::draw()
 		glTranslated(ThePlayer.origin.x, ThePlayer.origin.y, ThePlayer.origin.z);
 		gluSphere(quadric, 4000, 32, 16);
 	glPopMatrix();
+}
+
+double World::getRadius()
+{
+	return this->radius;
 }

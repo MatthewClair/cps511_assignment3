@@ -39,7 +39,7 @@ int main(int argc, const char *argv[])
 
 	numEnemies = 10;
 	for (int i = 0; i < numEnemies; i++) {
-		Vector3D origin(200*i, 0, -100);
+		Vector3D origin(100*i-TheWorld.getRadius()/2, 0, -100);
 		Vector3D angles(0, -90, 0);
 		Enemy e(origin, angles);
 		enemies.push_back(e);
@@ -202,17 +202,57 @@ void keyUpHandler(unsigned char key, int x, int y)
 void keyHandler()
 {
 	//player movement
-	if (keyStates['a'])
+	if (keyStates['a'] || keyStates['A'])
 	{
-		ThePlayer.accelerateLeft();
+		if (ThePlayer.getOrigin().x > -TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::LEFT);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
 	}
-	if (keyStates['d'])
+
+	if (keyStates['d'] || keyStates['D'])
 	{
-		ThePlayer.accelerateRight();
+		if (ThePlayer.getOrigin().x < TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::RIGHT);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
+	}
+
+	if (keyStates['w'] || keyStates['W'])
+	{
+		if (ThePlayer.getOrigin().y < TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::UP);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
+	}
+
+	if (keyStates['s'] || keyStates['W'])
+	{
+		if (ThePlayer.getOrigin().y > -TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::DOWN);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
 	}
 
 	//breaking if no movement keys are being pressed
-	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'])
+	if(!keyStates['a'] && !keyStates['d'] && !keyStates['w'] && !keyStates['s'] &&
+		!keyStates['A'] && !keyStates['D'] && !keyStates['W'] && !keyStates['S'])
 	{
 		ThePlayer.brake();
 	}
