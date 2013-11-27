@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <cstring>
+#include <ctime>
 #include <math.h>
 #include <list>
 #include <GL/gl.h>
@@ -24,7 +25,6 @@ bool* keyStates = new bool[256];
 
 std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
-int numEnemies;
 
 float plDiffuse[] = {0.8, 0.8, 0.8, 1.0};
 Vector3D plAngles(0, 0, 0);
@@ -32,14 +32,15 @@ Light playerLight(ThePlayer.getOrigin(), plAngles, GL_LIGHT0, plDiffuse);
 
 int main(int argc, const char *argv[])
 {
+	std::srand(std::time(0));
 	initDisplay(&argc, argv);
 	glutKeyboardFunc(keyDownHandler);
 	glutKeyboardUpFunc(keyUpHandler);
 
-	numEnemies = 10;
-	for (int i = 0; i < numEnemies; i++) {
-		for (int j = 0; j < numEnemies; j++) {
-			Vector3D origin(200*i-(numEnemies-1)*100, 100*j-(numEnemies-1)*50, -TheWorld.getRadius()/2);
+	int n = 10;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			Vector3D origin(200*i-(n-1)*100, 100*j-(n-1)*50, -TheWorld.getRadius()/2);
 			Vector3D angles(0, 0, 0);
 			Enemy e(origin, angles);
 			enemies.push_back(e);
@@ -125,7 +126,7 @@ void initDisplay(int *argc, const char *argv[])
 
 	glShadeModel(GL_SMOOTH);
 
-	glEnable(GL_TEXTURE_3D);
+	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_LIGHTING);

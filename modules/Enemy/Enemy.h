@@ -20,6 +20,7 @@ class Enemy : public DrawableEntity
 		void update();
 
 	private:
+		int enemyType;
 };
 
 #endif
