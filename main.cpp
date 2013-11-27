@@ -41,10 +41,12 @@ int main(int argc, const char *argv[])
 
 	numEnemies = 10;
 	for (int i = 0; i < numEnemies; i++) {
-		Vector3D origin(100*i-TheWorld.getRadius()/2, 0, -100);
-		Vector3D angles(0, -90, 0);
-		Enemy e(origin, angles);
-		enemies.push_back(e);
+		for (int j = 0; j < numEnemies; j++) {
+			Vector3D origin(200*i-(numEnemies-1)*100, 200*j-(numEnemies-1)*100, -TheWorld.getRadius()/2);
+			Vector3D angles(0, -90, 0);
+			Enemy e(origin, angles);
+			enemies.push_back(e);
+		}
 	}
 
 	glutMainLoop();
@@ -144,7 +146,7 @@ void display()
 	glViewport(0, 0, window_width, window_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(75, (float)window_width/(float)window_height, 1, 5000);
+	gluPerspective(80, (float)window_width/(float)window_height, 1, TheWorld.getRadius());
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 

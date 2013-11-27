@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "global.h"
 
 Enemy::Enemy() : DrawableEntity()
 { }
@@ -60,3 +61,13 @@ void Enemy::draw()
 	glPopMatrix();
 }
 
+void Enemy::update()
+{
+	velocity.z = 1;
+
+	if (origin.z > ThePlayer.getOrigin().z) {
+		origin.z = -TheWorld.getRadius()/2;
+	}
+
+	DrawableEntity::update();
+}
