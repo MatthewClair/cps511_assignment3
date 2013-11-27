@@ -22,7 +22,6 @@ void keyUpHandler(unsigned char key, int x, int y);
 void keyHandler();
 bool* keyStates = new bool[256];
 
-
 std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
 int numEnemies;
@@ -40,8 +39,8 @@ int main(int argc, const char *argv[])
 	numEnemies = 10;
 	for (int i = 0; i < numEnemies; i++) {
 		for (int j = 0; j < numEnemies; j++) {
-			Vector3D origin(200*i-(numEnemies-1)*100, 200*j-(numEnemies-1)*100, -TheWorld.getRadius()/2);
-			Vector3D angles(0, -90, 0);
+			Vector3D origin(200*i-(numEnemies-1)*100, 100*j-(numEnemies-1)*50, -TheWorld.getRadius()/2);
+			Vector3D angles(0, 0, 0);
 			Enemy e(origin, angles);
 			enemies.push_back(e);
 		}
