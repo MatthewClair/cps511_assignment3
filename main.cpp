@@ -148,11 +148,11 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	TheWorld.draw();
-
 	ThePlayer.draw();
 
 	playerLight.draw();
+
+	TheWorld.draw();
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
