@@ -25,6 +25,7 @@ bool* keyStates = new bool[256];
 int tick;
 
 std::list<Projectile> projectiles;
+std::list<Enemy> enemies;
 
 int main(int argc, const char *argv[])
 {
@@ -135,24 +136,24 @@ void display()
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	//temp--->
 	ThePlayer.draw();
 
+	//temp--->
 	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
 	Vector3D a(0, 0, 0);
 	float d[] = {0.8, 0.8, 0.8, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
 	light.draw();
-
-	Vector3D o2(0, 0, 0);
-	Enemy e(o2, a);
-	e.draw();
-
 	//<---temp
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
 		p->draw();
+	}
+
+	std::list<Enemy>::iterator e;
+	for (e = enemies.begin(); e != enemies.end(); e++) {
+		e->draw();
 	}
 
 	glutSwapBuffers();
@@ -166,11 +167,16 @@ void timerTick(int param)
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
-		p->update ();
+		p->update();
 
 		if (p->noLongerExists) {
 			p = projectiles.erase(p);
 		}
+	}
+
+	std::list<Enemy>::iterator e;
+	for (e = enemies.begin(); e != enemies.end(); e++) {
+		e->update();
 	}
 
 	glutPostRedisplay();

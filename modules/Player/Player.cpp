@@ -37,6 +37,58 @@ void Player::draw()
 	//z = sin(q) sin(f)
 
 	//y = cos(q)
+
+	glColor3ub(150, 150, 150);
+	glBegin(GL_QUADS);
+		//top left bar
+		glVertex3d(origin.x - 4   , origin.y + 5, origin.z - 2);
+		glVertex3d(origin.x - 3.75, origin.y    , origin.z - 5);
+		glVertex3d(origin.x - 3.5 , origin.y    , origin.z - 5);
+		glVertex3d(origin.x - 3.75, origin.y + 5, origin.z - 2);
+
+		//top right bar
+		glVertex3d(origin.x + 4   , origin.y + 5, origin.z - 2);
+		glVertex3d(origin.x + 3.75, origin.y    , origin.z - 5);
+		glVertex3d(origin.x + 3.5 , origin.y    , origin.z - 5);
+		glVertex3d(origin.x + 3.75, origin.y + 5, origin.z - 2);
+
+		//bottom left bar
+		glVertex3d(origin.x - 3.75, origin.y      , origin.z - 5);
+		glVertex3d(origin.x - 3.75, origin.y - 2.2, origin.z - 4.5);
+		glVertex3d(origin.x - 3.5 , origin.y - 2.2, origin.z - 4.5);
+		glVertex3d(origin.x - 3.5 , origin.y      , origin.z - 5);
+
+		//bottom right bar
+		glVertex3d(origin.x + 3.75, origin.y      , origin.z - 5);
+		glVertex3d(origin.x + 3.75, origin.y - 2.5, origin.z - 4.5);
+		glVertex3d(origin.x + 3.5 , origin.y - 2.5, origin.z - 4.5);
+		glVertex3d(origin.x + 3.5 , origin.y      , origin.z - 5);
+
+		//bottom left panel
+		glVertex3d(origin.x - 6   , origin.y - 2  , origin.z - 4);
+		glVertex3d(origin.x	- 6   , origin.y - 4  , origin.z - 4);
+		glVertex3d(origin.x       , origin.y - 4  , origin.z - 4.5);
+		glVertex3d(origin.x       , origin.y - 2  , origin.z - 4.5);
+
+		//bottom right panel
+		glVertex3d(origin.x + 6   , origin.y - 2  , origin.z - 4);
+		glVertex3d(origin.x	+ 6   , origin.y - 4  , origin.z - 4);
+		glVertex3d(origin.x       , origin.y - 4  , origin.z - 4.5);
+		glVertex3d(origin.x       , origin.y - 2  , origin.z - 4.5);
+
+		//crosshair-->
+		glVertex3d(origin.x - .01, origin.y + .1, origin.z - 5);
+		glVertex3d(origin.x - .01, origin.y - .1, origin.z - 5);
+		glVertex3d(origin.x + .01, origin.y - .1, origin.z - 5);
+		glVertex3d(origin.x + .01, origin.y + .1, origin.z - 5);
+
+		glVertex3d(origin.x - .1, origin.y + .01, origin.z - 5);
+		glVertex3d(origin.x - .1, origin.y - .01, origin.z - 5);
+		glVertex3d(origin.x + .1, origin.y - .01, origin.z - 5);
+		glVertex3d(origin.x + .1, origin.y + .01, origin.z - 5);
+		//<--
+
+	glEnd();
 }
 
 void Player::accelerateLeft()
