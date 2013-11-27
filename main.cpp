@@ -144,6 +144,9 @@ void display()
 	float d[] = {0.8, 0.8, 0.8, 1.0};
 	Light light(o, a, GL_LIGHT0, d);
 	light.draw();
+
+	TheWorld.draw();
+
 	//<---temp
 
 	std::list<Projectile>::iterator p;

@@ -1,7 +1,7 @@
 CC = g++
 OBJ = build/main.o build/global.o build/Vector3D.o build/DrawableEntity.o \
 	  build/Player.o build/Light.o build/Enemy.o build/Projectile.o \
-	  build/Colour.o build/Quad.o
+	  build/Colour.o build/Quad.o build/World.o
 BIN = main
 FLAGS = -lGL -lGLU -lglut -Wall -Werror -std=c++11 -Wdouble-promotion -I./
 
@@ -43,6 +43,9 @@ build/Colour.o: modules/Colour/Colour.cpp modules/Colour/Colour.h Makefile
 
 build/Quad.o: modules/Quad/Quad.cpp modules/Quad/Quad.h \
 	modules/Vector3D/Vector3D.h Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
+build/World.o: modules/World/World.cpp modules/World/World.h Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
 .PHONY: clean
