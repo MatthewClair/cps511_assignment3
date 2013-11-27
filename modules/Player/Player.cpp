@@ -17,6 +17,7 @@ Player::Player(Vector3D origin, Vector3D angles) :
 	velocity = {0, 0, 0};
 
 	fireDelay = 25;
+	maxSpeed = 5;
 	timeSinceLastFired = fireDelay;
 }
 
@@ -91,17 +92,30 @@ void Player::draw()
 	glEnd();
 }
 
-void Player::accelerateLeft()
+void Player::accelerate(Player::Direction dir)
 {
-	if (velocity.x > -5) {
-		velocity.x -= 1;
+	switch (dir)
+	{
+		case LEFT:
+			velocity.x -= .1;
+			break;
+		case RIGHT:
+			velocity.x += .1;
+			break;
+		case UP:
+			velocity.y += .1;
+			break;
+		case DOWN:
+			velocity.y -= .1;
+			break;
 	}
-}
 
-void Player::accelerateRight()
-{
-	if (velocity.x < 5) {
-		velocity.x += 1;
+	double vMagnitude = (velocity.x * velocity.x) + (velocity.y * velocity.y);
+	if(vMagnitude > maxSpeed*maxSpeed)
+	{
+		double scaleRatio = std::sqrt(vMagnitude)/maxSpeed;
+		velocity.x /= scaleRatio;
+		velocity.y /= scaleRatio;
 	}
 }
 

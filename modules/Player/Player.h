@@ -9,19 +9,22 @@
 class Player : public DrawableEntity
 {
 	public:
+		enum Direction{ LEFT, RIGHT, UP, DOWN };
+
+	public:
 		Player();
 		Player(Vector3D origin, Vector3D angles);
 		~Player();
 		void draw();
 		void update();
 
-		void accelerateLeft();
-		void accelerateRight();
+		void accelerate(Direction dir);
 		void brake();
 
 		void fireProjectiles(std::list<Projectile>* projectiles);
 
 	private:
+		double maxSpeed;
 		int fireDelay;
 		int timeSinceLastFired;
 };

@@ -41,7 +41,7 @@ int main(int argc, const char *argv[])
 
 	numEnemies = 10;
 	for (int i = 0; i < numEnemies; i++) {
-		Vector3D origin(200*i, 0, -100);
+		Vector3D origin(100*i-TheWorld.getRadius()/2, 0, -100);
 		Vector3D angles(0, -90, 0);
 		Enemy e(origin, angles);
 		enemies.push_back(e);
@@ -209,18 +209,43 @@ void keyHandler()
 	{
 		if (ThePlayer.getOrigin().x > -TheWorld.getRadius()/2)
 		{
-			ThePlayer.accelerateLeft();
+			ThePlayer.accelerate(Player::LEFT);
 		}
 		else
 		{
 			ThePlayer.brake();
 		}
 	}
+
 	if (keyStates['d'] || keyStates['D'])
 	{
 		if (ThePlayer.getOrigin().x < TheWorld.getRadius()/2)
 		{
-			ThePlayer.accelerateRight();
+			ThePlayer.accelerate(Player::RIGHT);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
+	}
+
+	if (keyStates['w'] || keyStates['W'])
+	{
+		if (ThePlayer.getOrigin().y < TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::UP);
+		}
+		else
+		{
+			ThePlayer.brake();
+		}
+	}
+
+	if (keyStates['s'] || keyStates['W'])
+	{
+		if (ThePlayer.getOrigin().y > -TheWorld.getRadius()/2)
+		{
+			ThePlayer.accelerate(Player::DOWN);
 		}
 		else
 		{
