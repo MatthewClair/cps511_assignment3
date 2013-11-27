@@ -21,14 +21,19 @@ void timerTick(int param);
 void keyDownHandler(unsigned char key, int x, int y);
 void keyUpHandler(unsigned char key, int x, int y);
 void keyHandler();
-bool* keyStates = new bool[256];
+bool keyStates[256];
 
 std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
 
-float plDiffuse[] = {0.8, 0.8, 0.8, 1.0};
-Vector3D plAngles(0, 0, 0);
-Light playerLight(ThePlayer.getOrigin(), plAngles, GL_LIGHT0, plDiffuse);
+float plDiffuse[] = {0.5, 0.5, 0.5, 1.0};
+Vector3D angles(0, 0, 0);
+Light playerLight(ThePlayer.getOrigin(), angles, GL_LIGHT0, plDiffuse);
+
+
+Vector3D sunOrigin(3750, 700, -1000);
+float sunDiffuse[] = {1, 1, 0.5, 1};
+Light sun(sunOrigin, angles, GL_LIGHT1, sunDiffuse);
 
 int main(int argc, const char *argv[])
 {
@@ -121,7 +126,7 @@ void initDisplay(int *argc, const char *argv[])
 	glClearColor(1.0,1.0,1.0,1.0);
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	float light_ambient[] = {.5, .5, .5, 1.0};
+	float light_ambient[] = {.2, .2, .2, 1.0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient);
 
 	glShadeModel(GL_SMOOTH);
@@ -132,9 +137,9 @@ void initDisplay(int *argc, const char *argv[])
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 
-	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1);
-	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.001f);
-    //glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, .0001f);
+	//glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 1);
+	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, .1f);
+	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, .04f);
 
 	glutDisplayFunc(display);
 
@@ -155,6 +160,15 @@ void display()
 	ThePlayer.draw();
 
 	playerLight.draw();
+	sun.draw();
+
+	glDisable(GL_LIGHTING);
+	glPushMatrix();
+		glColor3ub(255, 255, 0);
+		glTranslated(sunOrigin.x, sunOrigin.y, sunOrigin.z);
+		glutSolidSphere(TheWorld.getRadius()/4, 32, 16);
+	glPopMatrix();
+	glEnable(GL_LIGHTING);
 
 	TheWorld.draw();
 
