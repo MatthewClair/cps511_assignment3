@@ -28,3 +28,13 @@ void DrawableEntity::update()
 {
 	origin += velocity;
 }
+
+Vector3D DrawableEntity::getOrigin()
+{
+	return this->origin;
+}
+
+void DrawableEntity::setOrigin(Vector3D newOrigin)
+{
+	this->origin = newOrigin;
+}
