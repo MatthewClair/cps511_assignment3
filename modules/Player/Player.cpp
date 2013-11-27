@@ -16,7 +16,7 @@ Player::Player(Vector3D origin, Vector3D angles) :
 {
 	velocity = {0, 0, 0};
 
-	fireDelay = 50;
+	fireDelay = 25;
 	timeSinceLastFired = fireDelay;
 }
 
@@ -127,7 +127,8 @@ void Player::brake()
 void Player::fireProjectiles(std::list<Projectile>* projectiles)
 {
 	if (timeSinceLastFired >= fireDelay) {
-		Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 5);
+		//Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 5);
+		Vector3D pVelocity(0, 0, -5);
 		Colour pColour(255, 0, 0);
 		double pRadius = 3;
 

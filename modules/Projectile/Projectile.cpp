@@ -12,7 +12,7 @@ Projectile::Projectile(Vector3D origin, Vector3D angles, Vector3D velocity,
 	this->colour = c;
 
 	this->timeExisted = 0;
-	this->lifeSpan = 100;
+	this->lifeSpan = 250;
 	this->noLongerExists = false;
 }
 

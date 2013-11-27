@@ -13,6 +13,8 @@ class DrawableEntity
 		virtual void draw() = 0;
 
 		void update();
+		void setOrigin(Vector3D newOrigin);
+		Vector3D getOrigin();
 
 	public:
 		Vector3D origin;

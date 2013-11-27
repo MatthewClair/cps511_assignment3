@@ -26,6 +26,11 @@ int tick;
 
 std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
+int numEnemies;
+
+float plDiffuse[] = {0.8, 0.8, 0.8, 1.0};
+Vector3D plAngles(0, 0, 0);
+Light playerLight(ThePlayer.getOrigin(), plAngles, GL_LIGHT0, plDiffuse);
 
 int main(int argc, const char *argv[])
 {
@@ -34,6 +39,13 @@ int main(int argc, const char *argv[])
 	glutKeyboardUpFunc(keyUpHandler);
 	tick = 0;
 
+	numEnemies = 10;
+	for (int i = 0; i < numEnemies; i++) {
+		Vector3D origin(200*i, 0, -100);
+		Vector3D angles(0, -90, 0);
+		Enemy e(origin, angles);
+		enemies.push_back(e);
+	}
 
 	glutMainLoop();
 	return 0;
@@ -109,7 +121,7 @@ void initDisplay(int *argc, const char *argv[])
 	glClearColor(1.0,1.0,1.0,1.0);
 
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-	float light_ambient[] = {.2, .2, .2, 1.0};
+	float light_ambient[] = {.5, .5, .5, 1.0};
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_ambient);
 
 	glShadeModel(GL_SMOOTH);
@@ -138,17 +150,9 @@ void display()
 
 	ThePlayer.draw();
 
-	//temp--->
+	playerLight.draw();
+
 	TheWorld.draw();
-
-	Vector3D o(0, 400*sin(tick/128.0), 400*cos(tick/128.0));
-	Vector3D a(0, 0, 0);
-	float d[] = {0.8, 0.8, 0.8, 1.0};
-	Light light(o, a, GL_LIGHT0, d);
-	light.draw();
-
-
-	//<---temp
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
@@ -168,6 +172,7 @@ void timerTick(int param)
 {
 	keyHandler();
 	ThePlayer.update();
+	playerLight.setOrigin(ThePlayer.getOrigin());
 
 	std::list<Projectile>::iterator p;
 	for (p = projectiles.begin(); p != projectiles.end(); p++) {
