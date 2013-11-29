@@ -6,12 +6,16 @@
 Enemy::Enemy() : DrawableEntity()
 {
 	enemyType = std::rand() % 2;
+	attackType = std::rand() % 2;
+	isAlive = true;
 }
 
 Enemy::Enemy(Vector3D origin, Vector3D angles) :
 	DrawableEntity(origin, angles)
 {
 	enemyType = std::rand() % 2;
+	attackType = std::rand() % 2;
+	isAlive = true;
 }
 
 Enemy::~Enemy()
@@ -58,11 +62,27 @@ void Enemy::draw()
 
 void Enemy::update()
 {
-	velocity.z = 1;
+	velocity.z = 0;
 
 	if (origin.z > ThePlayer.getOrigin().z) {
-		origin.z = -TheWorld.getRadius()/2;
+		isAlive = false;
+	}
+
+	if (attacking) {
+		specialMovement();
 	}
 
 	DrawableEntity::update();
+}
+
+void Enemy::specialMovement()
+{
+	switch (attackType) {
+		case 1:
+			break;
+		case 2:
+			break;
+	}
+
+	velocity.z = 25;
 }

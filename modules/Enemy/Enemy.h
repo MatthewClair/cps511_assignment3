@@ -19,8 +19,14 @@ class Enemy : public DrawableEntity
 		void draw();
 		void update();
 
+		bool attacking;
+		bool isAlive;
+
 	private:
 		int enemyType;
+		int attackType;
+
+		void specialMovement();
 };
 
 #endif

@@ -35,6 +35,8 @@ Vector3D sunOrigin(3750, 700, -1000);
 float sunDiffuse[] = {1, 1, 0.5, 1};
 Light sun(sunOrigin, angles, GL_LIGHT1, sunDiffuse);
 
+int attackingEnemy;
+
 int main(int argc, const char *argv[])
 {
 	std::srand(std::time(0));
@@ -51,6 +53,7 @@ int main(int argc, const char *argv[])
 			enemies.push_back(e);
 		}
 	}
+	attackingEnemy = std::rand() & enemies.size();
 
 	glutMainLoop();
 	return 0;
@@ -201,8 +204,24 @@ void timerTick(int param)
 	}
 
 	std::list<Enemy>::iterator e;
+	int counter = 0;
 	for (e = enemies.begin(); e != enemies.end(); e++) {
+		if (counter == attackingEnemy) {
+			e->attacking = true;
+		}
+
 		e->update();
+
+		if (!e->isAlive) {
+			e = enemies.erase(e);
+
+			if (counter == attackingEnemy) {
+				if(enemies.size() > 0) {
+					attackingEnemy = std::rand() % enemies.size();
+				}
+			}
+		}
+		counter++;
 	}
 
 	glutPostRedisplay();
