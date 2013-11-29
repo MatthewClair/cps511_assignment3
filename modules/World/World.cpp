@@ -11,7 +11,7 @@ World::World() : DrawableEntity()
 	quadric = gluNewQuadric();
 	gluQuadricOrientation(quadric, GLU_INSIDE);
 	gluQuadricNormals(quadric, GLU_SMOOTH);
-	this->radius = 4000;
+	this->radius = 10000;
 }
 
 World::~World()

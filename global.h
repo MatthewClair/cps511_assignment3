@@ -6,6 +6,7 @@
 
 extern int window_width;
 extern int window_height;
+extern int tick;
 
 extern Player ThePlayer;
 extern World TheWorld;

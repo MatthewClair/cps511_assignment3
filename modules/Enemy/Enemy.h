@@ -26,6 +26,8 @@ class Enemy : public DrawableEntity
 		int enemyType;
 		int attackType;
 
+		Vector3D originalPos;
+
 		void specialMovement();
 };
 
