@@ -91,7 +91,7 @@ void Enemy::update()
 {
 	velocity.z = 0;
 
-	if (origin.z > ThePlayer.origin().z) {
+	if (origin.z > ThePlayer.origin.z) {
 		attacking = false;
 		velocity.x = 0;
 		velocity.y = 0;

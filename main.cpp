@@ -196,30 +196,6 @@ void timerTick(int param)
 	std::list<Projectile>::iterator p;
 	std::list<Enemy>::iterator e;
 
-	for (e = enemies.begin(); e != enemies.end(); e++)
-	{
-		e->update();
-	}
-
-	for (p = projectiles.begin(); p != projectiles.end(); p++)
-	{
-		p->update();
-
-		if (p->noLongerExists)
-		{
-			p = projectiles.erase(p);
-		}
-		else
-		{
-			for (e = enemies.begin(); e != enemies.end(); e++)
-			{
-				e->isColliding(*p);
-				e->isAlive = false;
-			}
-		}
-	}
-
-	std::list<Enemy>::iterator e;
 	int counter = 0;
 	for (e = enemies.begin(); e != enemies.end(); e++)
 	{
@@ -252,6 +228,26 @@ void timerTick(int param)
 			e = enemies.erase(e);
 		}
 		counter++;
+	}
+
+	for (p = projectiles.begin(); p != projectiles.end(); p++)
+	{
+		p->update();
+
+		if (p->noLongerExists)
+		{
+			p = projectiles.erase(p);
+		}
+		else
+		{
+			for (e = enemies.begin(); e != enemies.end(); e++)
+			{
+				if (e->isColliding(*p))
+				{
+					e->isAlive = false;
+				}
+			}
+		}
 	}
 
 	glutPostRedisplay();
