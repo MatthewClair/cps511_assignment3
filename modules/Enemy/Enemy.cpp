@@ -1,4 +1,6 @@
 #include <cstdlib>
+#include <stdio.h>
+#include <cmath>
 
 #include "Enemy.h"
 #include "global.h"
@@ -6,6 +8,13 @@
 Enemy::Enemy() : DrawableEntity()
 {
 	enemyType = std::rand() % 2;
+	attackType = std::rand() % 2;
+	isAlive = true;
+	attacking = false;
+	originalPos.x = origin.x;
+	originalPos.y = origin.y;
+	originalPos.z = origin.z;
+
 	this->generateBoundingBox();
 }
 
@@ -13,14 +22,14 @@ Enemy::Enemy(Vector3D origin) :
 	DrawableEntity(origin)
 {
 	enemyType = std::rand() % 2;
-	this->generateBoundingBox();
-}
+	attackType = std::rand() % 2;
+	isAlive = true;
+	attacking = false;
+	originalPos.x = origin.x;
+	originalPos.y = origin.y;
+	originalPos.z = origin.z;
 
-Enemy::Enemy(Vector3D origin,
-		Vector3D boxCoord1, Vector3D boxCoord2) :
-	DrawableEntity(origin, boxCoord1, boxCoord2)
-{
-	enemyType = 0;
+	this->generateBoundingBox();
 }
 
 Enemy::~Enemy()
@@ -80,11 +89,38 @@ void Enemy::draw()
 
 void Enemy::update()
 {
-	velocity.z = 1;
+	velocity.z = 0;
 
-	if (origin.z > ThePlayer.origin.z) {
-		origin.z = -TheWorld.getRadius()/2;
+	if (origin.z > ThePlayer.origin().z) {
+		attacking = false;
+		velocity.x = 0;
+		velocity.y = 0;
+		origin.x = originalPos.x;
+		origin.y = originalPos.y;
+		origin.z = originalPos.z-1000;
+	}
+
+	if (origin.z < originalPos.z) {
+		velocity.z = 1;
+	}
+
+	if (attacking) {
+		specialMovement();
 	}
 
 	DrawableEntity::update();
+}
+
+void Enemy::specialMovement()
+{
+	velocity.z = 2;
+
+	switch (attackType) {
+		case 1:
+			velocity.x = 2 * std::cos(tick/100.0);
+			velocity.y = 2 * std::sin(tick/100.0);
+			break;
+		case 2:
+			break;
+	}
 }

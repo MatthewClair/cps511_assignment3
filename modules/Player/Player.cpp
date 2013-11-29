@@ -131,9 +131,9 @@ void Player::fireProjectiles(std::list<Projectile>* projectiles)
 {
 	if (timeSinceLastFired >= fireDelay) {
 		//Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 5);
-		Vector3D pVelocity(0, 0, -5);
+		Vector3D pVelocity(0, 0, -10);
 		Colour pColour(255, 0, 0);
-		double pRadius = 3;
+		double pRadius = 4;
 
 		Vector3D o1(origin.x - 15, origin.y, origin.z);
 		Vector3D o2(origin.x + 15, origin.y, origin.z);

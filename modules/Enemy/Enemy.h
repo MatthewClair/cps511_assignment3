@@ -21,11 +21,19 @@ class Enemy : public DrawableEntity
 		void draw();
 		void update();
 
+		bool attacking;
+		bool isAlive;
+
 	private:
 		void generateBoundingBox();
 
 	private:
 		int enemyType;
+		int attackType;
+
+		Vector3D originalPos;
+
+		void specialMovement();
 };
 
 #endif

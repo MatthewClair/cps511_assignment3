@@ -34,6 +34,8 @@ Vector3D sunOrigin(3750, 700, -1000);
 float sunDiffuse[] = {1, 1, 0.5, 1};
 Light sun(sunOrigin, GL_LIGHT1, sunDiffuse);
 
+int attackingEnemy;
+
 int main(int argc, const char *argv[])
 {
 	std::srand(std::time(0));
@@ -41,14 +43,15 @@ int main(int argc, const char *argv[])
 	glutKeyboardFunc(keyDownHandler);
 	glutKeyboardUpFunc(keyUpHandler);
 
-	int n = 1;
+	int n = 6;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			Vector3D origin(200*i-(n-1)*100, 100*j-(n-1)*50, -TheWorld.getRadius()/2);
+			Vector3D origin(400*i-(n-1)*200, 200*j-(n-1)*100, -2000);
 			Enemy e(origin);
 			enemies.push_back(e);
 		}
 	}
+	attackingEnemy = std::rand() & enemies.size();
 
 	glutMainLoop();
 	return 0;
@@ -151,7 +154,7 @@ void display()
 	glViewport(0, 0, window_width, window_height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(80, (float)window_width/(float)window_height, 1, TheWorld.getRadius());
+	gluPerspective(80, (float)window_width/(float)window_height, 1, 10000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
@@ -164,7 +167,7 @@ void display()
 	glPushMatrix();
 		glColor3ub(255, 255, 0);
 		glTranslated(sunOrigin.x, sunOrigin.y, sunOrigin.z);
-		glutSolidSphere(TheWorld.getRadius()/4, 32, 16);
+		glutSolidSphere(1000, 32, 16);
 	glPopMatrix();
 	glEnable(GL_LIGHTING);
 
@@ -185,6 +188,7 @@ void display()
 
 void timerTick(int param)
 {
+	tick++;
 	keyHandler();
 	ThePlayer.update();
 	playerLight.setOrigin(ThePlayer.origin);
@@ -215,6 +219,41 @@ void timerTick(int param)
 		}
 	}
 
+	std::list<Enemy>::iterator e;
+	int counter = 0;
+	for (e = enemies.begin(); e != enemies.end(); e++)
+	{
+		bool attackFlag = false;
+		if (counter == attackingEnemy)
+		{
+			e->attacking = true;
+			attackFlag = true;
+		}
+
+		e->update();
+		if(attackFlag && !e->attacking)
+		{
+			if(enemies.size() > 0)
+			{
+				attackingEnemy = std::rand() % enemies.size();
+			}
+		}
+
+		if (!e->isAlive)
+		{
+			if (e->attacking)
+			{
+				if(enemies.size() > 0)
+				{
+					attackingEnemy = std::rand() % enemies.size();
+				}
+			}
+
+			e = enemies.erase(e);
+		}
+		counter++;
+	}
+
 	glutPostRedisplay();
 	glutTimerFunc(10, timerTick, 0);
 }
@@ -234,7 +273,7 @@ void keyHandler()
 	//player movement
 	if (keyStates['a'] || keyStates['A'])
 	{
-		if (ThePlayer.origin.x > -TheWorld.getRadius()/2)
+		if (ThePlayer.origin.x > -1500)
 		{
 			ThePlayer.accelerate(Player::LEFT);
 		}
@@ -246,7 +285,7 @@ void keyHandler()
 
 	if (keyStates['d'] || keyStates['D'])
 	{
-		if (ThePlayer.origin.x < TheWorld.getRadius()/2)
+		if (ThePlayer.origin.x < 1500)
 		{
 			ThePlayer.accelerate(Player::RIGHT);
 		}
@@ -258,7 +297,7 @@ void keyHandler()
 
 	if (keyStates['w'] || keyStates['W'])
 	{
-		if (ThePlayer.origin.y < TheWorld.getRadius()/2)
+		if (ThePlayer.origin.y < 1000)
 		{
 			ThePlayer.accelerate(Player::UP);
 		}
@@ -268,9 +307,9 @@ void keyHandler()
 		}
 	}
 
-	if (keyStates['s'] || keyStates['W'])
+	if (keyStates['s'] || keyStates['S'])
 	{
-		if (ThePlayer.origin.y > -TheWorld.getRadius()/2)
+		if (ThePlayer.origin.y > -1000)
 		{
 			ThePlayer.accelerate(Player::DOWN);
 		}
