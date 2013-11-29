@@ -5,15 +5,18 @@
 Projectile::Projectile() : DrawableEntity()
 { }
 
-Projectile::Projectile(Vector3D origin, Vector3D angles, Vector3D velocity,
-		GLdouble radius, Colour c) : DrawableEntity(origin, angles, velocity)
+Projectile::Projectile(Vector3D origin, Vector3D velocity,
+		GLdouble radius, Colour c) : DrawableEntity(origin, velocity)
 {
 	this->radius = radius;
-	this->colour = c;
+	colour = c;
 
-	this->timeExisted = 0;
-	this->lifeSpan = 500;
-	this->noLongerExists = false;
+	timeExisted = 0;
+	lifeSpan = 500;
+	noLongerExists = false;
+
+	boundingBox[0] = { radius, radius, radius };
+	boundingBox[1] = { -radius, -radius, -radius };
 }
 
 Projectile::~Projectile()

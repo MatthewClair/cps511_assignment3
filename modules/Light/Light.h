@@ -9,7 +9,7 @@ class Light : public DrawableEntity
 {
 	public:
 		Light();
-		Light(Vector3D origin, Vector3D angles,
+		Light(Vector3D origin,
 				GLenum light, const float *diffuse);
 		~Light();
 		void draw();

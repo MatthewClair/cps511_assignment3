@@ -6,16 +6,40 @@
 Enemy::Enemy() : DrawableEntity()
 {
 	enemyType = std::rand() % 2;
+	this->generateBoundingBox();
 }
 
-Enemy::Enemy(Vector3D origin, Vector3D angles) :
-	DrawableEntity(origin, angles)
+Enemy::Enemy(Vector3D origin) :
+	DrawableEntity(origin)
 {
 	enemyType = std::rand() % 2;
+	this->generateBoundingBox();
+}
+
+Enemy::Enemy(Vector3D origin,
+		Vector3D boxCoord1, Vector3D boxCoord2) :
+	DrawableEntity(origin, boxCoord1, boxCoord2)
+{
+	enemyType = 0;
 }
 
 Enemy::~Enemy()
 { }
+
+void Enemy::generateBoundingBox()
+{
+	switch (enemyType)
+	{
+		case 0:
+			boundingBox[0] = {  75,  25.0,  50.0 };
+			boundingBox[1] = { -75, -25.0, -65.0 };
+			break;
+		case 1:
+			boundingBox[0] = {  75.0,  35.0,  75.0 };
+			boundingBox[1] = { -75.0, -35.0, -75.0 };
+			break;
+	}
+}
 
 void Enemy::draw()
 {
@@ -23,35 +47,33 @@ void Enemy::draw()
 
 	glPushMatrix();
 		glTranslated(origin.x, origin.y, origin.z);
-		glRotated(angles.x, 1.0, 0.0, 0.0);
-		glRotated(angles.y, 0.0, 1.0, 0.0);
-		glRotated(angles.z, 0.0, 0.0, 1.0);
-		if (enemyType)
+		switch (enemyType)
 		{
-			glPushMatrix();
-				glScaled(50.0, 50.0, 100.0);
-				glutSolidCube(1);
-			glPopMatrix();
+			case 0:
+				glPushMatrix();
+					glScaled(50.0, 50.0, 100.0);
+					glutSolidCube(1);
+				glPopMatrix();
 
-			glPushMatrix();
-				glTranslated(50.0, 0, -40.0);
-				glScaled(50.0, 50.0, 50.0);
-				glutSolidCube(1);
-			glPopMatrix();
+				glPushMatrix();
+					glTranslated(50.0, 0, -40.0);
+					glScaled(50.0, 50.0, 50.0);
+					glutSolidCube(1);
+				glPopMatrix();
 
-			glPushMatrix();
-				glTranslated(-50.0, 0, -40.0);
-				glScaled(50.0, 50.0, 50.0);
-				glutSolidCube(1);
-			glPopMatrix();
-		}
-		else
-		{
-			glutSolidSphere(35.0, 32, 16);
-			glPushMatrix();
-				glScaled(75, 20, 75);
-				glutSolidSphere(1.0, 32, 16);
-			glPopMatrix();
+				glPushMatrix();
+					glTranslated(-50.0, 0, -40.0);
+					glScaled(50.0, 50.0, 50.0);
+					glutSolidCube(1);
+				glPopMatrix();
+				break;
+			case 1:
+				glutSolidSphere(35.0, 32, 16);
+				glPushMatrix();
+					glScaled(75, 20, 75);
+					glutSolidSphere(1.0, 32, 16);
+				glPopMatrix();
+				break;
 		}
 	glPopMatrix();
 }
@@ -60,7 +82,7 @@ void Enemy::update()
 {
 	velocity.z = 1;
 
-	if (origin.z > ThePlayer.getOrigin().z) {
+	if (origin.z > ThePlayer.origin.z) {
 		origin.z = -TheWorld.getRadius()/2;
 	}
 

@@ -1,24 +1,22 @@
 #define _USE_MATH_DEFINES
+#include <cstdlib>
+#include <limits.h>
 #include <cmath>
 #include <GL/glu.h>
 
 #include "Player.h"
 
 Player::Player() : DrawableEntity()
-{
-	origin = {0, 0, 0};
-	angles = {0, 0, 0};
-	velocity = {0, 0, 0};
-}
+{ }
 
-Player::Player(Vector3D origin, Vector3D angles) :
-	DrawableEntity(origin, angles)
+Player::Player(Vector3D origin) :
+	DrawableEntity(origin)
 {
-	velocity = {0, 0, 0};
-
 	fireDelay = 25;
 	maxSpeed = 5;
 	timeSinceLastFired = fireDelay;
+	boundingBox[0] = {  75.0,  25.0,  50.0 };
+	boundingBox[1] = { -75.0, -25.0, -50.0 };
 }
 
 Player::~Player()
@@ -68,7 +66,7 @@ void Player::draw()
 		glVertex3d(origin.x       , origin.y - 4  , origin.z - 4.5);
 		glVertex3d(origin.x       , origin.y - 2  , origin.z - 4.5);
 
-		//crosshair-->
+		//crosshair{{{
 		glVertex3d(origin.x - .01, origin.y + .1, origin.z - 5);
 		glVertex3d(origin.x - .01, origin.y - .1, origin.z - 5);
 		glVertex3d(origin.x + .01, origin.y - .1, origin.z - 5);
@@ -78,7 +76,7 @@ void Player::draw()
 		glVertex3d(origin.x - .1, origin.y - .01, origin.z - 5);
 		glVertex3d(origin.x + .1, origin.y - .01, origin.z - 5);
 		glVertex3d(origin.x + .1, origin.y + .01, origin.z - 5);
-		//<--
+		//}}}
 
 	glEnd();
 }
@@ -102,7 +100,7 @@ void Player::accelerate(Player::Direction dir)
 	}
 
 	double vMagnitude = (velocity.x * velocity.x) + (velocity.y * velocity.y);
-	if(vMagnitude > maxSpeed*maxSpeed)
+	if (vMagnitude > maxSpeed*maxSpeed)
 	{
 		double scaleRatio = std::sqrt(vMagnitude)/maxSpeed;
 		velocity.x /= scaleRatio;
@@ -140,8 +138,8 @@ void Player::fireProjectiles(std::list<Projectile>* projectiles)
 		Vector3D o1(origin.x - 15, origin.y, origin.z);
 		Vector3D o2(origin.x + 15, origin.y, origin.z);
 
-		Projectile p1(o1, angles, pVelocity, pRadius, pColour);
-		Projectile p2(o2, angles, pVelocity, pRadius, pColour);
+		Projectile p1(o1, pVelocity, pRadius, pColour);
+		Projectile p2(o2, pVelocity, pRadius, pColour);
 
 		projectiles->push_back(p1);
 		projectiles->push_back(p2);

@@ -14,10 +14,15 @@ class Enemy : public DrawableEntity
 {
 	public:
 		Enemy();
-		Enemy(Vector3D origin, Vector3D angles);
+		Enemy(Vector3D origin);
+		Enemy(Vector3D origin,
+				Vector3D boxCoord1, Vector3D boxCoord2);
 		~Enemy();
 		void draw();
 		void update();
+
+	private:
+		void generateBoundingBox();
 
 	private:
 		int enemyType;

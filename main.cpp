@@ -27,13 +27,12 @@ std::list<Projectile> projectiles;
 std::list<Enemy> enemies;
 
 float plDiffuse[] = {0.5, 0.5, 0.5, 1.0};
-Vector3D angles(0, 0, 0);
-Light playerLight(ThePlayer.getOrigin(), angles, GL_LIGHT0, plDiffuse);
+Light playerLight(ThePlayer.origin, GL_LIGHT0, plDiffuse);
 
 
 Vector3D sunOrigin(3750, 700, -1000);
 float sunDiffuse[] = {1, 1, 0.5, 1};
-Light sun(sunOrigin, angles, GL_LIGHT1, sunDiffuse);
+Light sun(sunOrigin, GL_LIGHT1, sunDiffuse);
 
 int main(int argc, const char *argv[])
 {
@@ -42,12 +41,11 @@ int main(int argc, const char *argv[])
 	glutKeyboardFunc(keyDownHandler);
 	glutKeyboardUpFunc(keyUpHandler);
 
-	int n = 10;
+	int n = 1;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			Vector3D origin(200*i-(n-1)*100, 100*j-(n-1)*50, -TheWorld.getRadius()/2);
-			Vector3D angles(0, 0, 0);
-			Enemy e(origin, angles);
+			Enemy e(origin);
 			enemies.push_back(e);
 		}
 	}
@@ -189,20 +187,32 @@ void timerTick(int param)
 {
 	keyHandler();
 	ThePlayer.update();
-	playerLight.setOrigin(ThePlayer.getOrigin());
+	playerLight.setOrigin(ThePlayer.origin);
 
 	std::list<Projectile>::iterator p;
-	for (p = projectiles.begin(); p != projectiles.end(); p++) {
-		p->update();
+	std::list<Enemy>::iterator e;
 
-		if (p->noLongerExists) {
-			p = projectiles.erase(p);
-		}
+	for (e = enemies.begin(); e != enemies.end(); e++)
+	{
+		e->update();
 	}
 
-	std::list<Enemy>::iterator e;
-	for (e = enemies.begin(); e != enemies.end(); e++) {
-		e->update();
+	for (p = projectiles.begin(); p != projectiles.end(); p++)
+	{
+		p->update();
+
+		if (p->noLongerExists)
+		{
+			p = projectiles.erase(p);
+		}
+		else
+		{
+			for (e = enemies.begin(); e != enemies.end(); e++)
+			{
+				e->isColliding(*p);
+				e->isAlive = false;
+			}
+		}
 	}
 
 	glutPostRedisplay();
@@ -224,7 +234,7 @@ void keyHandler()
 	//player movement
 	if (keyStates['a'] || keyStates['A'])
 	{
-		if (ThePlayer.getOrigin().x > -TheWorld.getRadius()/2)
+		if (ThePlayer.origin.x > -TheWorld.getRadius()/2)
 		{
 			ThePlayer.accelerate(Player::LEFT);
 		}
@@ -236,7 +246,7 @@ void keyHandler()
 
 	if (keyStates['d'] || keyStates['D'])
 	{
-		if (ThePlayer.getOrigin().x < TheWorld.getRadius()/2)
+		if (ThePlayer.origin.x < TheWorld.getRadius()/2)
 		{
 			ThePlayer.accelerate(Player::RIGHT);
 		}
@@ -248,7 +258,7 @@ void keyHandler()
 
 	if (keyStates['w'] || keyStates['W'])
 	{
-		if (ThePlayer.getOrigin().y < TheWorld.getRadius()/2)
+		if (ThePlayer.origin.y < TheWorld.getRadius()/2)
 		{
 			ThePlayer.accelerate(Player::UP);
 		}
@@ -260,7 +270,7 @@ void keyHandler()
 
 	if (keyStates['s'] || keyStates['W'])
 	{
-		if (ThePlayer.getOrigin().y > -TheWorld.getRadius()/2)
+		if (ThePlayer.origin.y > -TheWorld.getRadius()/2)
 		{
 			ThePlayer.accelerate(Player::DOWN);
 		}

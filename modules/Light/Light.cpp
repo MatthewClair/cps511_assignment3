@@ -3,8 +3,9 @@
 Light::Light() : DrawableEntity()
 { }
 
-Light::Light(Vector3D origin, Vector3D angles,
-		GLenum light, const float *diffuse): DrawableEntity(origin, angles)
+Light::Light(Vector3D origin,
+		GLenum light, const float *diffuse) :
+	DrawableEntity(origin)
 {
 	this->light = light;
 	this->diffuse[0] = diffuse[0];
