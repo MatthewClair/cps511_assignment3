@@ -31,7 +31,7 @@ Light playerLight(ThePlayer.origin, GL_LIGHT0, plDiffuse);
 
 
 Vector3D sunOrigin(3750, 700, -1000);
-float sunDiffuse[] = {1, 1, 0.5, 1};
+float sunDiffuse[] = {1, 1, 1, 1};
 Light sun(sunOrigin, GL_LIGHT1, sunDiffuse);
 
 int attackingEnemy;
@@ -161,27 +161,27 @@ void display()
 	ThePlayer.draw();
 
 	playerLight.draw();
-	sun.draw();
+	//sun.draw();
 
-	glDisable(GL_LIGHTING);
-	glPushMatrix();
-		glColor3ub(255, 255, 0);
-		glTranslated(sunOrigin.x, sunOrigin.y, sunOrigin.z);
-		glutSolidSphere(1000, 32, 16);
-	glPopMatrix();
-	glEnable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
+	//glPushMatrix();
+		////glColor3ub(255, 255, 0);
+		//glTranslated(sunOrigin.x, sunOrigin.y, sunOrigin.z);
+		//glutSolidSphere(1000, 32, 16);
+	//glPopMatrix();
+	//glEnable(GL_LIGHTING);
 
 	TheWorld.draw();
 
-	std::list<Projectile>::iterator p;
-	for (p = projectiles.begin(); p != projectiles.end(); p++) {
-		p->draw();
-	}
+	//std::list<Projectile>::iterator p;
+	//for (p = projectiles.begin(); p != projectiles.end(); p++) {
+		//p->draw();
+	//}
 
-	std::list<Enemy>::iterator e;
-	for (e = enemies.begin(); e != enemies.end(); e++) {
-		e->draw();
-	}
+	//std::list<Enemy>::iterator e;
+	//for (e = enemies.begin(); e != enemies.end(); e++) {
+		//e->draw();
+	//}
 
 	glutSwapBuffers();
 }

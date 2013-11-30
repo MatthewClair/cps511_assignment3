@@ -1,14 +1,26 @@
 CC = g++
 OBJ = build/main.o build/global.o build/Vector3D.o build/DrawableEntity.o \
 	  build/Player.o build/Light.o build/Enemy.o build/Projectile.o \
-	  build/Colour.o build/Quad.o build/World.o
+	  build/Colour.o build/Quad.o build/World.o build/Image.o
 BIN = main
 FLAGS = -lGL -lGLU -lglut -Wall -Werror -std=c++11 -Wdouble-promotion -I./
+
+#main2: build/Image.o build/main2.o Makefile
+	#$(CC) $(FLAGS) -o main2 build/Image.o build/main2.o
+
+#build/main2.o: main2.cpp Makefile
+	#$(CC) $(FLAGS) -o $@ -c $<
 
 $(BIN): $(OBJ) Makefile
 	$(CC) $(FLAGS) -o $(BIN) $(OBJ)
 
+build/main3.o: main3.cpp Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
 build/global.o: global.cpp global.h modules/Player/Player.h Makefile
+	$(CC) $(FLAGS) -o $@ -c $<
+
+build/Image.o: modules/Image/Image.cpp modules/Image/Image.h modules/Player/Player.h Makefile
 	$(CC) $(FLAGS) -o $@ -c $<
 
 build/main.o: main.cpp Makefile

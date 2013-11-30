@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <GL/gl.h>
+
 #include "global.h"
 #include "modules/Vector3D/Vector3D.h"
 

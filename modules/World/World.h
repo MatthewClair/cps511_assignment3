@@ -4,6 +4,7 @@
 #include <GL/glu.h>
 
 #include "modules/DrawableEntity/DrawableEntity.h"
+#include "modules/Image/Image.h"
 
 class World : public DrawableEntity
 {
@@ -16,7 +17,9 @@ class World : public DrawableEntity
 
 	private:
 		GLUquadric *quadric;
+		GLuint textureID;
 		double radius;
+		Image image;
 };
 
 #endif

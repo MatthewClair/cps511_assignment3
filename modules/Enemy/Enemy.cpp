@@ -30,6 +30,7 @@ Enemy::Enemy(Vector3D origin) :
 	originalPos.z = origin.z;
 
 	this->generateBoundingBox();
+	//textureID = loadBMP_cust("res/Mandrill.bmp");
 }
 
 Enemy::~Enemy()

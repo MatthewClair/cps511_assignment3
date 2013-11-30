@@ -26,14 +26,14 @@ class Enemy : public DrawableEntity
 
 	private:
 		void generateBoundingBox();
+		void specialMovement();
 
 	private:
 		int enemyType;
 		int attackType;
+		GLuint textureID;
 
 		Vector3D originalPos;
-
-		void specialMovement();
 };
 
 #endif
