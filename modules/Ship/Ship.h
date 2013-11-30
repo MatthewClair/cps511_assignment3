@@ -10,6 +10,7 @@ class Ship : public DrawableEntity
 {
 	public:
 		enum Direction{ LEFT, RIGHT, UP, DOWN };
+		bool isAlive;
 
 	public:
 		Ship();

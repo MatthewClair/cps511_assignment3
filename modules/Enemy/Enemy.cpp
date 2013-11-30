@@ -114,11 +114,14 @@ void Enemy::update(std::list<Projectile>* projectiles)
 
 void Enemy::fire(std::list<Projectile>* projectiles)
 {
-	Vector3D velocity(0, 0, 10);
-	int radius = 4;
-	Colour c(0, 0, 255);
-	Projectile p(origin, velocity, radius, c);
-	projectiles->push_back(p);
+	if (timeSinceLastFired >= fireDelay) {
+		Vector3D velocity(0, 0, 10);
+		int radius = 4;
+		Colour c(0, 255, 0);
+		Projectile p(origin, velocity, radius, c);
+		projectiles->push_back(p);
+		timeSinceLastFired = 0;
+	}
 }
 
 void Enemy::specialMovement()

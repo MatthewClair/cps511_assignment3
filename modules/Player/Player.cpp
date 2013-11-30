@@ -12,6 +12,7 @@ Player::Player() : Ship()
 Player::Player(Vector3D origin) :
 	Ship(origin)
 {
+	isAlive = true;
 	fireDelay = 25;
 	maxSpeed = 5;
 	timeSinceLastFired = fireDelay;
@@ -28,6 +29,7 @@ void Player::draw()
 			origin.x, origin.y, origin.z - 1,
 			0, 1, 0);
 
+	glDisable(GL_LIGHTING);
 	glColor3ub(150, 150, 150);
 	glBegin(GL_QUADS);
 		//top left bar
@@ -79,6 +81,7 @@ void Player::draw()
 		//}}}
 
 	glEnd();
+	glEnable(GL_LIGHTING);
 }
 
 void Player::fire(std::list<Projectile>* projectiles)

@@ -20,7 +20,6 @@ class Enemy : public Ship
 		void fire(std::list<Projectile>* projectiles);
 
 		bool attacking;
-		bool isAlive;
 
 	private:
 		void generateBoundingBox();
