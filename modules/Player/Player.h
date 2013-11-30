@@ -3,30 +3,18 @@
 
 #include <list>
 
-#include "modules/DrawableEntity/DrawableEntity.h"
+#include "modules/Ship/Ship.h"
 #include "modules/Projectile/Projectile.h"
 
-class Player : public DrawableEntity
+class Player : public Ship
 {
-	public:
-		enum Direction{ LEFT, RIGHT, UP, DOWN };
-
 	public:
 		Player();
 		Player(Vector3D origin);
 		~Player();
 		void draw();
-		void update();
 
-		void accelerate(Direction dir);
-		void brake();
-
-		void fireProjectiles(std::list<Projectile>* projectiles);
-
-	private:
-		double maxSpeed;
-		int fireDelay;
-		int timeSinceLastFired;
+		void fire(std::list<Projectile>* projectiles);
 };
 
 #endif

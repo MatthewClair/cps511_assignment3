@@ -4,13 +4,10 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 
-#include "modules/World/World.h"
-#include "modules/Player/Player.h"
-#include "modules/DrawableEntity/DrawableEntity.h"
+#include "modules/Ship/Ship.h"
 #include "modules/Vector3D/Vector3D.h"
-#include "modules/Quad/Quad.h"
 
-class Enemy : public DrawableEntity
+class Enemy : public Ship
 {
 	public:
 		Enemy();
@@ -19,7 +16,8 @@ class Enemy : public DrawableEntity
 				Vector3D boxCoord1, Vector3D boxCoord2);
 		~Enemy();
 		void draw();
-		void update();
+		void update(std::list<Projectile>* projectiles);
+		void fire(std::list<Projectile>* projectiles);
 
 		bool attacking;
 		bool isAlive;

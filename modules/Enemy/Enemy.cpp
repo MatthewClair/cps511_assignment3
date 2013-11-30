@@ -5,7 +5,7 @@
 #include "Enemy.h"
 #include "global.h"
 
-Enemy::Enemy() : DrawableEntity()
+Enemy::Enemy() : Ship()
 {
 	enemyType = std::rand() % 2;
 	attackType = std::rand() % 2;
@@ -19,7 +19,7 @@ Enemy::Enemy() : DrawableEntity()
 }
 
 Enemy::Enemy(Vector3D origin) :
-	DrawableEntity(origin)
+	Ship(origin)
 {
 	enemyType = std::rand() % 2;
 	attackType = std::rand() % 2;
@@ -87,7 +87,7 @@ void Enemy::draw()
 	glPopMatrix();
 }
 
-void Enemy::update()
+void Enemy::update(std::list<Projectile>* projectiles)
 {
 	velocity.z = 0;
 
@@ -106,21 +106,57 @@ void Enemy::update()
 
 	if (attacking) {
 		specialMovement();
+		fire(projectiles);
 	}
 
-	DrawableEntity::update();
+	Ship::update();
+}
+
+void Enemy::fire(std::list<Projectile>* projectiles)
+{
+	Vector3D velocity(0, 0, 10);
+	int radius = 4;
+	Colour c(0, 0, 255);
+	Projectile p(origin, velocity, radius, c);
+	projectiles->push_back(p);
 }
 
 void Enemy::specialMovement()
 {
-	velocity.z = 2;
+	velocity.z = 3;
 
 	switch (attackType) {
-		case 1:
+		case 0:
 			velocity.x = 2 * std::cos(tick/100.0);
 			velocity.y = 2 * std::sin(tick/100.0);
 			break;
-		case 2:
+		case 1:
+			if (origin.x < ThePlayer.origin.x)
+			{
+				velocity.x += .1;
+			}
+			else
+			{
+				velocity.x -= .1;
+			}
+
+			if (origin.y < ThePlayer.origin.y)
+			{
+				velocity.y += .1;
+			}
+			else
+			{
+				velocity.y -= .1;
+			}
+
+			int maxSpeed = 5;
+			double speed = (velocity.x * velocity.x) + (velocity.y * velocity.y);
+			if (speed > maxSpeed*maxSpeed)
+			{
+				double scaleRatio = std::sqrt(speed)/maxSpeed;
+				velocity.x /= scaleRatio;
+				velocity.y /= scaleRatio;
+			}
 			break;
 	}
 }

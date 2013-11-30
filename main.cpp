@@ -13,6 +13,7 @@
 #include "modules/Projectile/Projectile.h"
 #include "modules/Colour/Colour.h"
 #include "modules/Enemy/Enemy.h"
+#include "modules/Player/Player.h"
 
 void initDisplay(int *argc, const char *argv[]);
 void display();
@@ -24,6 +25,7 @@ void keyHandler();
 bool keyStates[256];
 
 std::list<Projectile> projectiles;
+std::list<Projectile> enemyProjectiles;
 std::list<Enemy> enemies;
 
 float plDiffuse[] = {0.5, 0.5, 0.5, 1.0};
@@ -206,7 +208,7 @@ void timerTick(int param)
 			attackFlag = true;
 		}
 
-		e->update();
+		e->update(&enemyProjectiles);
 		if(attackFlag && !e->attacking)
 		{
 			if(enemies.size() > 0)
@@ -271,7 +273,7 @@ void keyHandler()
 	{
 		if (ThePlayer.origin.x > -1500)
 		{
-			ThePlayer.accelerate(Player::LEFT);
+			ThePlayer.accelerate(Ship::LEFT);
 		}
 		else
 		{
@@ -283,7 +285,7 @@ void keyHandler()
 	{
 		if (ThePlayer.origin.x < 1500)
 		{
-			ThePlayer.accelerate(Player::RIGHT);
+			ThePlayer.accelerate(Ship::RIGHT);
 		}
 		else
 		{
@@ -295,7 +297,7 @@ void keyHandler()
 	{
 		if (ThePlayer.origin.y < 1000)
 		{
-			ThePlayer.accelerate(Player::UP);
+			ThePlayer.accelerate(Ship::UP);
 		}
 		else
 		{
@@ -307,7 +309,7 @@ void keyHandler()
 	{
 		if (ThePlayer.origin.y > -1000)
 		{
-			ThePlayer.accelerate(Player::DOWN);
+			ThePlayer.accelerate(Ship::DOWN);
 		}
 		else
 		{
@@ -325,7 +327,7 @@ void keyHandler()
 	//firing a projectile
 	if (keyStates[' '])
 	{
-		ThePlayer.fireProjectiles(&projectiles);
+		ThePlayer.fire(&projectiles);
 	}
 
 }

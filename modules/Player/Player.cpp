@@ -6,11 +6,11 @@
 
 #include "Player.h"
 
-Player::Player() : DrawableEntity()
+Player::Player() : Ship()
 { }
 
 Player::Player(Vector3D origin) :
-	DrawableEntity(origin)
+	Ship(origin)
 {
 	fireDelay = 25;
 	maxSpeed = 5;
@@ -81,53 +81,7 @@ void Player::draw()
 	glEnd();
 }
 
-void Player::accelerate(Player::Direction dir)
-{
-	switch (dir)
-	{
-		case LEFT:
-			velocity.x -= .1;
-			break;
-		case RIGHT:
-			velocity.x += .1;
-			break;
-		case UP:
-			velocity.y += .1;
-			break;
-		case DOWN:
-			velocity.y -= .1;
-			break;
-	}
-
-	double vMagnitude = (velocity.x * velocity.x) + (velocity.y * velocity.y);
-	if (vMagnitude > maxSpeed*maxSpeed)
-	{
-		double scaleRatio = std::sqrt(vMagnitude)/maxSpeed;
-		velocity.x /= scaleRatio;
-		velocity.y /= scaleRatio;
-	}
-}
-
-void Player::brake()
-{
-	velocity.x *= .92;
-	velocity.y *= .92;
-	velocity.z *= .92;
-
-	if (velocity.x < .01 && velocity.x > -0.01) {
-		velocity.x = 0;
-	}
-
-	if (velocity.y < .01 && velocity.y > -0.01) {
-		velocity.y = 0;
-	}
-
-	if (velocity.z < .01 && velocity.z > -0.01) {
-		velocity.z = 0;
-	}
-}
-
-void Player::fireProjectiles(std::list<Projectile>* projectiles)
+void Player::fire(std::list<Projectile>* projectiles)
 {
 	if (timeSinceLastFired >= fireDelay) {
 		//Vector3D pVelocity(velocity.x, velocity.y, velocity.z - 5);
@@ -146,11 +100,4 @@ void Player::fireProjectiles(std::list<Projectile>* projectiles)
 
 		timeSinceLastFired = 0;
 	}
-}
-
-void Player::update()
-{
-	timeSinceLastFired++;
-
-	DrawableEntity::update();
 }

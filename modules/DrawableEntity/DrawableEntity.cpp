@@ -92,7 +92,7 @@ void DrawableEntity::drawBBox()
 			glVertex3d(boundingBox[1].x, boundingBox[1].y, boundingBox[1].z);
 			glVertex3d(boundingBox[1].x, boundingBox[0].y, boundingBox[1].z);
 		glEnd();
-		
+
 	glPopMatrix();
 }
 
@@ -115,7 +115,6 @@ bool DrawableEntity::isColliding(const DrawableEntity &other)
 				boundingBox[0].z + origin.z >= other.boundingBox[c].z + other.origin.z &&
 			   	boundingBox[1].z + origin.z <= other.boundingBox[c].z + other.origin.z)
 		{
-			printf("hello world!\n");
 			return true;
 		}
 	}
